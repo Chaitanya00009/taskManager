@@ -9,6 +9,10 @@ server.use(express.json());
 
 server.use("/", routes);
 server.use("/tasks", authMiddleware, taskRoutes);
+server.get("/health", (req, res) => {
+  res.status(200).send("OK");
+});
+
 async function startServer() {
   try {
     await dbConnection();
