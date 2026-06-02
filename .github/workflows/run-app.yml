@@ -1,0 +1,25 @@
+name: Run Task Manager App
+
+on:
+  push:
+    branches:
+      - test
+
+jobs:
+  run-app:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3 #Tells the repo to download this updated code in the sandbox env
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3 #To install the dependencies (node in this case along with version)
+        with:
+          node-version: "18"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Start app
+        run: npm test
