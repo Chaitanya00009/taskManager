@@ -21,5 +21,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Start app
-        run: npm start
+      - name: Start app in background
+        run: nohup node index.js &
+
+      - name: Health Check
+        run: curl --fail http://localhost:1100 || exit 1 #curl either returns success (0) or non-zero which will be converted to 1
