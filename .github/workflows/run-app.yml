@@ -26,3 +26,7 @@ jobs:
 
       - name: Health Check
         run: curl --fail http://localhost:1100/health || exit 1 #curl either returns success (0) or non-zero which will be converted to 1
+  merge-to-master:
+    needs: run-app #needs run-app.yml to be completed...
+    if: ${{success()}}
+    uses: ./.github/workflows/push-master.yml
