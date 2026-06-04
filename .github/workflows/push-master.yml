@@ -29,12 +29,21 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Merge test into Master branch
+      - name: Checkout master
         run: |
-          git fetch origin master 
+          git fetch origin master
           git checkout master
-          git merge test --no-ff --allow-unrelated-histories -m "Auto merge into Master branch after test workflow is successful"
+      - name: Merge test into master
+        run: |
+          git fetch origin test
+          git merge origin/test --no-ff -m "Auto merge test into master"
           git push origin master
+    #   - name: Merge test into Master branch
+    #     run: |
+    #       git fetch origin master
+    #       git checkout master
+    #       git merge test --no-ff --allow-unrelated-histories -m "Auto merge into Master branch after test workflow is successful"
+    #       git push origin master
 
     #The fetch is used to update the master branch in the sandbox.
     # Divergence commit -> If master and test both had different commits, it is called divergence commit
