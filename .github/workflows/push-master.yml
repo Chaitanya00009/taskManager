@@ -3,8 +3,7 @@ name: Push to Master
 on:
   workflow_run:
     workflows: ["Run Task Manager App"]
-    types:
-      - completed # Types are 1.completed 2.in_progress 3.requested
+    types: [completed] # Types are 1.completed 2.in_progress 3.requested
 
 permissions:
   contents: write
