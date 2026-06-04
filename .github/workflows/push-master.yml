@@ -6,6 +6,9 @@ on:
     types:
       - completed # Types are 1.completed 2.in_progress 3.requested
 
+permissions:
+  contents: write
+
 jobs:
   push-to-master:
     if: ${{github.event.workflow_run.conclusion == 'success'}}
