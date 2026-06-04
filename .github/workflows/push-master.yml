@@ -33,7 +33,7 @@ jobs:
         run: |
           git fetch origin master 
           git checkout master
-          git merge test --no-ff -m "Auto merge into Master branch after test workflow is successful"
+          git merge test --no-ff --allow-unrelated-histories -m "Auto merge into Master branch after test workflow is successful"
           git push origin master
 
     #The fetch is used to update the master branch in the sandbox.
