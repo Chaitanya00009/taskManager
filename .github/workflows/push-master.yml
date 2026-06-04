@@ -1,0 +1,37 @@
+name: Push to Master
+
+on:
+  workflow_run:
+    workflows: ["Run Task Manager App"]
+    types:
+      - completed # Types are 1.completed 2.in_progress 3.requested
+
+jobs:
+  push-to-master:
+    if: ${{github.event.workflow_run.conclusion == 'success'}}
+    # Checks if the workflow is done with ==> The types are 1.success 2.Failed 3.Skipped 4.Cancelled
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout test branch
+        uses: actions/checkout@v3
+        with:
+          ref: test
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Merge test into Master branch
+        run: |
+          git fetch origin master 
+          git checkout master
+          git merge test --no-ff -m "Auto merge into Master branch after test workflow is successful"
+          git push origin master
+
+    #The fetch is used to update the master branch in the sandbox.
+    # Divergence commit -> If master and test both had different commits, it is called divergence commit
+    #If master and test both have the same commits (A → B), but you pushed them separately, Git still sees them as identical histories. And tries to fastforward commit... Basically that commit does not have a track.
+    # If only test is updated and master has no new commits, then there’s no divergence. In that case, Git can simply move the master pointer forward to match test. That’s the fast‑forward merge scenario.
