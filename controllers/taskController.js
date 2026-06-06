@@ -134,10 +134,10 @@ async function deleteTask(req, res) {
   const task = req.query.id;
   //  const userExists = await userModel.findOne({ email: mail });
   const taskExists = await taskModel.findById(task);
-  if (!userExists) {
+  if (!mail) {
     return res.status(404).json({ message: "The user doesn't exist" });
   } else {
-    if (userExists.role === "admin") {
+    if (mail.role === "admin") {
       if (!taskExists) {
         return res.status(404).json({ message: "The task doesn't exist" });
       } else {

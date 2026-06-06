@@ -1,0 +1,41 @@
+name: Lint Check before Test
+
+on:
+  push:
+    branches:
+      - test
+
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  lint-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "24"
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint -- --format stylish > eslint-report.txt
+
+      - name: Upload EsLint
+        uses: actions/upload-artifact@v4
+        with:
+          name: uploading Eslint
+          path: eslint-report.txt
+
+  lint-success:
+    needs: lint-check
+    if: ${{success()}}
+    uses: ./.github/workflows/run-app.yml
