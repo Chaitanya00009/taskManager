@@ -22,7 +22,10 @@ jobs:
       - name: Checkout test branch
         uses: actions/checkout@v3
         with:
-          ref: test
+          fetch-depth: 0
+
+      #   - name: Fetch all branches
+      #     run: git fetch --all
 
       - name: Configure Git
         run: |
