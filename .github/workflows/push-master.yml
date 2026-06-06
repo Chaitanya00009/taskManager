@@ -36,7 +36,7 @@ jobs:
       - name: Merge test into master
         run: |
           git fetch origin test
-          git merge origin/test --no-ff --allow unrelated-histories -m "Auto merge test into master"
+          git merge origin/test --no-ff --allow-unrelated-histories -m "Auto merge test into master"
           git push origin master
     #   - name: Merge test into Master branch
     #     run: |
